@@ -3,3 +3,10 @@ __pycache__/
 *.log
 /wandb
 .idea/
+dump/
+
+# Ignore dynaconf secret files
+.secrets.*
+# Don't ignore .secrets.example.*
+!.secrets.example.*
+

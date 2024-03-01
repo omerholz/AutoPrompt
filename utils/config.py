@@ -7,9 +7,7 @@ from langchain.llms.huggingface_pipeline import HuggingFacePipeline
 from langchain.chat_models import AzureChatOpenAI
 from langchain.chains import LLMChain
 import logging
-
-LLM_ENV = yaml.safe_load(open('config/llm_env.yml', 'r'))
-
+from configuration import settings
 
 class Color:
     RED = '\033[91m'
@@ -34,21 +32,29 @@ def get_llm(config: dict):
     else:
         model_kwargs = {}
     if config['type'] == 'OpenAI':
-        if LLM_ENV['openai']['OPENAI_ORGANIZATION'] == '':
-            return ChatOpenAI(temperature=temperature, model_name=config['name'],
-                              openai_api_key=LLM_ENV['openai']['OPENAI_API_KEY'],
-                              model_kwargs=model_kwargs)
+        if 'organization' not in settings.openai:
+            return ChatOpenAI(
+                temperature=temperature,
+                model_name=config['name'],
+                openai_api_key=settings.openai.api_key,
+                model_kwargs=model_kwargs,
+            )
         else:
-            return ChatOpenAI(temperature=temperature, model_name=config['name'],
-                              openai_api_key=LLM_ENV['openai']['OPENAI_API_KEY'],
-                              openai_organization=LLM_ENV['openai']['OPENAI_ORGANIZATION'],
-                              model_kwargs=model_kwargs)
+            return ChatOpenAI(
+                temperature=temperature,
+                model_name=config['name'],
+                openai_api_key=settings.openai.api_key,
+                openai_organization=settings.openai.organization,
+                model_kwargs=model_kwargs,
+            )
     elif config['type'] == 'Azure':
-        AzureChatOpenAI(temperature=temperature, model_name=config['name'],
-                        openai_api_key=LLM_ENV['azure']['AZURE_OPENAI_API_KEY'],
-                        azure_endpoint=LLM_ENV['azure']['AZURE_OPENAI_ENDPOINT'],
-                        openai_api_version=LLM_ENV['azure']['OPENAI_API_VERSION'])
-
+        return AzureChatOpenAI(
+            temperature=temperature,
+            model_name=config['name'],
+            openai_api_key=settings.azure.openai.api_key,
+            azure_endpoint=settings.azure.openai.endpoint,
+            openai_api_version=settings.azure.openai.api_version,
+        )
 
     elif config['type'] == 'HuggingFacePipeline':
         return HuggingFacePipeline.from_model_id(
