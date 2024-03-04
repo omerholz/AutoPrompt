@@ -16,6 +16,8 @@ prodict = "*"
 schedule = "*"
 easydict = "*"
 argilla = "*"
+pydantic-settings = "*"
+pydantic = "*"
 
 [dev-packages]
 
