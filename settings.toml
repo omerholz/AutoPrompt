@@ -1,0 +1,5 @@
+openai.organization = ''
+azure.openai.endpoint = ''
+azure.openai.api_version = ''
+
+

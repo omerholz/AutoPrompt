@@ -4,4 +4,7 @@ __pycache__/
 /wandb
 .idea/
 dump/
+.secrets.toml
+!example.secrets.toml
+
 
