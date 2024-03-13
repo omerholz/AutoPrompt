@@ -18,9 +18,11 @@ easydict = "*"
 argilla = "*"
 pydantic-settings = "*"
 pydantic = "*"
+dynaconf = "*"
 langchain-google-genai = "*"
 
 [dev-packages]
+ipython = "*"
 
 [requires]
 python_version = "3.10"
