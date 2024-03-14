@@ -3,10 +3,11 @@ from config.schema.providers import Providers
 from config.schema.misc import DatasetSettings
 from config.schema.annotator import AnnotatorSettings
 from config.schema.predictor import PredictorSettings
+from config.schema.llm import LlmSettings
 
 class Settings(ConfigBase):
     use_wandb: bool = True
-    providers: Providers
+    llm: LlmSettings
     dataset: DatasetSettings
     annotator: AnnotatorSettings
     predictor: PredictorSettings

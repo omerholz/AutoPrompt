@@ -12,4 +12,18 @@ class ConfigBase(BaseModel):
             if k and v
         }
 
+    def model_dump_to_callable(self, kallable, *args, **kwargs):
+        """This function is intended to be used to safely pass the model's settings as K/V arguments to a callable.
+        It takes a callable and additional arguments and keyword arguments.
+        It returns the result of calling the callable, passing the K/V arguments as returned by the calling
+        the model_dump function, passing the additional arguments and keyword arguments.
+        Before passing the result of the model_dump function to the callable, None and empty values are removed
+        and secrets are replaced with their values.
+
+        This is a safer alternative to using func_kwarg_model_dump function directly.
+        """
+        return kallable(self.func_kwarg_model_dump(*args, **kwargs))
+
+
+
 
