@@ -1,20 +1,20 @@
 from config.schema.base import ConfigBase
-from pydantic import model_validator
+from pydantic import model_validator, SecretStr
 
 
 class OpenAIProviderSettings(ConfigBase):
-    api_key: str
+    api_key: SecretStr
     organization: str | None = None
 
 
 class AzureOpenAIProviderSettings(ConfigBase):
-    api_key: str
+    api_key: SecretStr
     endpoint: str
     api_version: str
 
 
 class GoogleAIProviderSettings(ConfigBase):
-    api_key: str
+    api_key: SecretStr
 
 
 AnyProviderSettings = OpenAIProviderSettings | AzureOpenAIProviderSettings | GoogleAIProviderSettings
